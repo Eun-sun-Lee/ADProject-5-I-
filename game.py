@@ -10,6 +10,7 @@ from word import Word
 
 class Game(QWidget):
     def __init__(self, parent=None):
+    	#GUI설정
         super().__init__(parent)
         self.gameLayout = QGridLayout()
         self.statusLayout = QGridLayout()
@@ -29,21 +30,25 @@ class Game(QWidget):
         self.setWindowTitle('CrossWord Game')
         self.startGame()
     def startGame(self):
+    	#변수 초기화및 모듈초기화
         self.win = False
         self.Word = Word("word.txt")
         self.Puzzle_make = Puzzle_make()
         self.gameOver = False
         self.Puzzle_make.make_puzzle()
+        self.statustxt.clear()
         self.gameSlot = copy.deepcopy(self.Puzzle_make.puzzle_board)
         print(self.Puzzle_make.puzzle_board)
         self.life = 10
         self.statustxt.setText("life : " + str(self.life))
+        #puzzle_make에서 생성된 퍼즐을 GUI로 변환
         for i in range(len(self.Puzzle_make.puzzle_board)):
             for j in range(len(self.Puzzle_make.puzzle_board[i])):
                 self.gameSlot[i][j]=QTextEdit()
                 if self.Puzzle_make.puzzle_board[i][j]=='#':
                     self.gameSlot[i][j].setText("#")
                     self.gameSlot[i][j].setReadOnly(True)
+                    self.gameSlot[i][j].setStyleSheet("background-color: black;")
                 elif self.Puzzle_make.puzzle_board[i][j]!='_':
                     self.gameSlot[i][j].setText(self.Puzzle_make.puzzle_board[i][j])
                     self.gameSlot[i][j].setReadOnly(True)
@@ -56,16 +61,18 @@ class Game(QWidget):
                 self.gameSlot[i][j].setFixedSize(100,100)
                 self.gameSlot[i][j].setFont(font)
                 self.gameSlot[i][j].setAlignment(Qt.AlignCenter)
+        	#GUI 출력
                 self.gameLayout.addWidget(self.gameSlot[i][j],i,j)
         self.mainLayout.addLayout(self.gameLayout, 0, 0)
         self.setLayout(self.mainLayout)
+        #정답파일을 res_check로 전송 및 초기화
         self.res_check = Res_Check(self.Puzzle_make.res_puzzle)
         print(self.Puzzle_make.res_puzzle)
-        self.statustxt.clear()
-        self.win=False
     def res_Check_Clicked(self):
+    	#이미 승리하였다면 게임 초기화
         if self.win == True:
             self.startGame()
+        #퍼즐판을 복사한 후 1문자로 이루어지지않는 텍스트위젯이 존재할경우 리턴
         self.nowslot = copy.deepcopy(self.Puzzle_make.puzzle_board)
         for i in range(len(self.gameSlot)):
             for j in range(len(self.gameSlot[i])):
@@ -74,22 +81,24 @@ class Game(QWidget):
                         self.statustxt.setText("not one char")
                         print("not 1 word")
                         return
-
+        #목숨이 0이면 게임오버 출력, 게임 초기화
         if self.gameOver == True:
             print(GameOver)
-            self.statustxt.setText("Game Over")
-            pass
-            print(a)
-
+            self.statustxt.setText("Game Over\nStart new game")
+            self.startGame()
+            return
+        #res_check.py를 통해 정답인지 체크
         success = self.res_check.cmp(self.nowslot)
         if success == False:
+            #정답이 아니면 목숨-1
             self.life-=1
             print("-1 life")
             self.statustxt.setText("life : " + str(self.life))
             if(self.life==0):
+            	 #목숨이 0이라면 게임오버 true
                 self.gameOver=True
             return
-
+        #승리했다면 승리문구 출력 및 win 변수 true
         self.statustxt.setText("You Win!\npush res check button to restart")
         self.win = True
 if __name__ == '__main__':
