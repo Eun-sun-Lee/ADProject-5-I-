@@ -22,14 +22,15 @@ class Puzzle_load_words:
             print('None')
             return None
 
-        for i in range(len(b)):
+        for i in range(len(b)): # b문자열 길이만큼 반복
             str = ''
-            for j in range(len(a)):
-                if i == co2:
+            for j in range(len(a)): # a문자열 길이만큼 반복
+                if i == co2: # 행 번호가 a와 b가 겹치는 문자의 b에서의 index와 같으면 그 행에는 a를 출력
                     str += a[j]
-                elif j == co1:
+                elif j == co1: # 열 번호가 a와 b가 겹치는 문자의 a에서의 index와 같으면 그 열에는 b를 출력
                     str += b[i]
-                else:
+                else: # 그외는 .을 출력
                     str += '.'
             print(str)
         return (co1, co2)
+
