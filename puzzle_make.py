@@ -33,7 +33,7 @@ class Puzzle_make:
         i = 0
         while i < len(word1)-1:
                 self.puzzle_board[common_y][location_x[i]] = '_'
-                self.res_puzzle[common_y][location_x[i]] = word1[location_x[i]]
+                self.res_puzzle[common_y][location_x[i]] = word1[i]
                 i += 1
         #
 
@@ -48,10 +48,11 @@ class Puzzle_make:
         i = 0
         while i < len(word2)-1:
                 self.puzzle_board[location_y[i]][common_x] = '_'
-                self.res_puzzle[location_y[i]][common_x] = word1[location_y[i]]
+                self.res_puzzle[location_y[i]][common_x] = word2[i]
                 i += 1
-        #
 
+        self.res_puzzle[common_y][common_x]=word2[common_y]
+        #
         i = 0
         while i < (len(word2)-1)/2: #  word2의 (len(word1)-1)/2 번 반복하며 puzzle_board에 문자를 표기
             random_index = random.randrange(0, len(location_y)) # random한 index 뽑기
