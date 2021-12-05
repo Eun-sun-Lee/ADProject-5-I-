@@ -86,7 +86,7 @@ class Game(QWidget):
                 self.gameOver=True
             return
 
-        self.statustxt.setText("You Win!")
+        self.statustxt.setText("You Win!\npush res check button to restart")
         self.win = True
 if __name__ == '__main__':
     import sys
