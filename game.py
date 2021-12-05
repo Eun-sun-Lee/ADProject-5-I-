@@ -16,7 +16,7 @@ class Game(QWidget):
         self.mainLayout = QGridLayout()
         self.statustxt = QTextEdit()
         self.statusLayout.addWidget(self.statustxt)
-        self.statustxt.setFixedSize(150,50)
+        self.statustxt.setFixedSize(200,80)
         self.statustxt.setReadOnly(True)
         self.mainLayout.addLayout(self.statusLayout, 0, 1)
         self.rescheckButton = QToolButton()
@@ -24,6 +24,8 @@ class Game(QWidget):
         self.rescheckButton.clicked.connect(self.res_Check_Clicked)
         self.statusLayout.addWidget(self.rescheckButton, 0, 1)
         self.setLayout(self.mainLayout)
+        self.setGeometry(100,200,300,400)
+        self.setFixedSize(1000,800)
         self.setWindowTitle('CrossWord Game')
         self.startGame()
     def startGame(self):
@@ -53,6 +55,7 @@ class Game(QWidget):
                 self.gameSlot[i][j].setFont(font)
                 self.gameSlot[i][j].setFixedSize(100,100)
                 self.gameSlot[i][j].setFont(font)
+                self.gameSlot[i][j].setAlignment(Qt.AlignCenter)
                 self.gameLayout.addWidget(self.gameSlot[i][j],i,j)
         self.mainLayout.addLayout(self.gameLayout, 0, 0)
         self.setLayout(self.mainLayout)
@@ -68,6 +71,7 @@ class Game(QWidget):
             for j in range(len(self.gameSlot[i])):
                     self.nowslot[i][j]=self.gameSlot[i][j].toPlainText()
                     if len(self.nowslot[i][j])!=1:
+                        self.statustxt.setText("not one char")
                         print("not 1 word")
                         return
 
