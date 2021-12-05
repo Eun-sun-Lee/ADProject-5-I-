@@ -28,10 +28,8 @@ class Puzzle_make:
         location_x.remove(common_x) # 겹치는 문자를 제외하고 뽑으므로 삭제
         location_y.remove(common_y) # 겹치는 문자를 제외하고 뽑으므로 삭제
         
-        #수정
-        
         self.res_puzzle = [['#']*len(word1) for _ in range(len(word2))]
-        
+        #수정
         i = 0
         while i < len(word1)-1:
                 self.puzzle_board[common_y][location_x[i]] = '_'
