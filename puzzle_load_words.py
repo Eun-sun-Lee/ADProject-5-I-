@@ -31,6 +31,6 @@ class Puzzle_load_words:
                     str += b[i]
                 else: # 그외는 .을 출력
                     str += '.'
-            print(str)
+            #print(str) -> 정답 출력 부분
         return (co1, co2)
 
