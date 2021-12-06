@@ -1,7 +1,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QLayout, QGridLayout
-from PyQt5.QtWidgets import QTextEdit, QLineEdit, QToolButton
+from PyQt5.QtWidgets import QTextEdit, QLineEdit, QToolButton,QMessageBox
+
 import copy
 from res_check import Res_Check
 from puzzle_make import Puzzle_make
@@ -78,7 +79,12 @@ class Game(QWidget):
             for j in range(len(self.gameSlot[i])):
                     self.nowslot[i][j]=self.gameSlot[i][j].toPlainText()
                     if len(self.nowslot[i][j])!=1:
-                        self.statustxt.setText("not one char")
+                        msg=QMessageBox()
+                        msg.setIcon(QMessageBox.Critical)
+                        msg.setText("알파벳 하나만 입력하세요")
+                        msg.setWindowTitle("---경고---")
+                        msg.exec_()
+                     #   self.statustxt.setText("알파벳 하나만 입력하세요")
                         print("not 1 word")
                         return
         #목숨이 0이면 게임오버 출력, 게임 초기화
