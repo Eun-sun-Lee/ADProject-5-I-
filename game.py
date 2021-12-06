@@ -38,6 +38,9 @@ class Game(QWidget):
         self.gameOver = False
         self.Puzzle_make.make_puzzle()
         self.statustxt.clear()
+        for i in reversed(range(self.gameLayout.count())):
+            self.gameLayout.itemAt(i).widget().setParent(None)
+        self.gameSlot=""
         self.gameSlot = copy.deepcopy(self.Puzzle_make.puzzle_board)
         print(self.Puzzle_make.puzzle_board)
         self.life = 10
@@ -73,12 +76,19 @@ class Game(QWidget):
     	#이미 승리하였다면 게임 초기화
         if self.win == True:
             self.startGame()
+        #목숨이 0이면 게임오버 출력, 게임 초기화
+        if self.gameOver == True:
+            print("GameOver")
+            #self.statustxt.setText("Game Over\nStart new game")
+            self.startGame()
+            return
         #퍼즐판을 복사한 후 1문자로 이루어지지않는 텍스트위젯이 존재할경우 리턴
+        self.nowslot = ""
         self.nowslot = copy.deepcopy(self.Puzzle_make.puzzle_board)
         for i in range(len(self.gameSlot)):
             for j in range(len(self.gameSlot[i])):
                     self.nowslot[i][j]=self.gameSlot[i][j].toPlainText()
-                    if len(self.nowslot[i][j])>2: #여러개의 문자가 들어왔을 때 에러 처리
+                    if len(self.nowslot[i][j])>1: #여러개의 문자가 들어왔을 때 에러 처리
                         msg=QMessageBox()
                         msg.setIcon(QMessageBox.Critical)
                         msg.setText("알파벳 하나만 입력하세요.")
@@ -96,12 +106,6 @@ class Game(QWidget):
                      #   self.statustxt.setText("빈칸이 존재합니다. 모두 채워주세요.")
                         print("exist 0 word")
                         return
-        #목숨이 0이면 게임오버 출력, 게임 초기화
-        if self.gameOver == True:
-            print("GameOver")
-            #self.statustxt.setText("Game Over\nStart new game")
-            self.startGame()
-            return
         #res_check.py를 통해 정답인지 체크
         success = self.res_check.cmp(self.nowslot)
         if success == False:
