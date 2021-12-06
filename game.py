@@ -78,7 +78,7 @@ class Game(QWidget):
         for i in range(len(self.gameSlot)):
             for j in range(len(self.gameSlot[i])):
                     self.nowslot[i][j]=self.gameSlot[i][j].toPlainText()
-                    if len(self.nowslot[i][j])>2: #여러개의 문자가 들어왔을 때 에러 처리
+                    if len(self.nowslot[i][j])>1: #여러개의 문자가 들어왔을 때 에러 처리
                         msg=QMessageBox()
                         msg.setIcon(QMessageBox.Critical)
                         msg.setText("알파벳 하나만 입력하세요.")
