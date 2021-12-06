@@ -98,8 +98,8 @@ class Game(QWidget):
                         return
         #목숨이 0이면 게임오버 출력, 게임 초기화
         if self.gameOver == True:
-            print(GameOver)
-            self.statustxt.setText("Game Over\nStart new game")
+            print("GameOver")
+            #self.statustxt.setText("Game Over\nStart new game")
             self.startGame()
             return
         #res_check.py를 통해 정답인지 체크
@@ -110,7 +110,8 @@ class Game(QWidget):
             print("-1 life")
             self.statustxt.setText("life : " + str(self.life))
             if(self.life==0):
-            	 #목숨이 0이라면 게임오버 true
+            	#목숨이 0이라면 게임오버 true
+                self.statustxt.setText("Game Over\nStart new game")
                 self.gameOver=True
             return
         #승리했다면 승리문구 출력 및 win 변수 true
