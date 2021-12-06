@@ -59,7 +59,7 @@ class Game(QWidget):
                 font = self.gameSlot[i][j].font()
                 font.setPointSize(font.pointSize()+30)
                 self.gameSlot[i][j].setFont(font)
-                self.gameSlot[i][j].setFixedSize(100,100)
+                self.gameSlot[i][j].setFixedHeight(100)
                 self.gameSlot[i][j].setFont(font)
                 self.gameSlot[i][j].setAlignment(Qt.AlignCenter)
         	#GUI 출력
