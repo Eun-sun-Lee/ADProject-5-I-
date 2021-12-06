@@ -78,14 +78,23 @@ class Game(QWidget):
         for i in range(len(self.gameSlot)):
             for j in range(len(self.gameSlot[i])):
                     self.nowslot[i][j]=self.gameSlot[i][j].toPlainText()
-                    if len(self.nowslot[i][j])!=1: #여러개의 문자가 들어왔을 때 에러 처리
+                    if len(self.nowslot[i][j])>2: #여러개의 문자가 들어왔을 때 에러 처리
                         msg=QMessageBox()
                         msg.setIcon(QMessageBox.Critical)
-                        msg.setText("알파벳 하나만 입력하세요")
+                        msg.setText("알파벳 하나만 입력하세요.")
                         msg.setWindowTitle("---경고---")
                         msg.exec_()
-                     #   self.statustxt.setText("알파벳 하나만 입력하세요")
+                     #   self.statustxt.setText("알파벳 하나만 입력하세요.")
                         print("not 1 word")
+                        return
+                    elif len(self.nowslot[i][j])==0: #빈칸이 존재할 시 에러 처리
+                        msg=QMessageBox()
+                        msg.setIcon(QMessageBox.Critical)
+                        msg.setText("빈칸이 존재합니다. 모두 채워주세요.")
+                        msg.setWindowTitle("---경고---")
+                        msg.exec_()
+                     #   self.statustxt.setText("빈칸이 존재합니다. 모두 채워주세요.")
+                        print("exist 0 word")
                         return
         #목숨이 0이면 게임오버 출력, 게임 초기화
         if self.gameOver == True:
